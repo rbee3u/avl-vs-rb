@@ -1,17 +1,18 @@
 linters:
   disable-all: true
   enable:
+    - asasalint
     - asciicheck
     - bidichk
     - bodyclose
     - containedctx
     - contextcheck
     - cyclop
-    - deadcode
     - decorder
     - depguard
     - dogsled
     - dupl
+    - dupword
     - durationcheck
     - errcheck
     - errchkjson
@@ -46,11 +47,12 @@ linters:
     - gosimple
     - govet
     - grouper
-    - ifshort
     - importas
     - ineffassign
-    # - ireturn
+    - interfacebloat
+    - ireturn
     - lll
+    - loggercheck
     - maintidx
     - makezero
     - misspell
@@ -67,14 +69,15 @@ linters:
     - prealloc
     - predeclared
     - promlinter
-    # - revive
+    - reassign
+    - revive
     - rowserrcheck
     - sqlclosecheck
     - staticcheck
-    - structcheck
     - stylecheck
     - tagliatelle
     - tenv
+    - testableexamples
     - testpackage
     - thelper
     - tparallel
@@ -82,34 +85,26 @@ linters:
     - unconvert
     - unparam
     - unused
-    - varcheck
-    # - varnamelen
+    - usestdlibvars
+    - varnamelen
     - wastedassign
     - whitespace
     - wrapcheck
     - wsl
 
-linters-settings:
-  cyclop:
-    max-complexity: 20
-  dupl:
-    threshold: 1000
-  funlen:
-    lines: 100
-  gocognit:
-    min-complexity: 100
-  gomnd:
-    settings:
-      mnd:
-        ignored-functions: stats.*
-  nestif:
-    min-complexity: 100
+run:
+  tests: false
 
 issues:
   exclude-rules:
-    - linters:
+    - path: \.go
+      linters:
+        - cyclop
+        - dupl
+        - exhaustruct
         - gochecknoglobals
-      path: pkg/stats
-    - linters:
+        - gomnd
         - gosec
-      text: "G108: Profiling endpoint is automatically exposed on /debug/pprof"
+        - ireturn
+        - nestif
+        - varnamelen

@@ -9,8 +9,8 @@ import (
 	_ "net/http/pprof"
 	"time"
 
-	"github.com/rbee3u/avl-vs-rb/pkg/bst"
-	"github.com/rbee3u/avl-vs-rb/pkg/stats"
+	"github.com/rbee3u/avl-vs-rb/stats"
+	"github.com/rbee3u/avl-vs-rb/trees"
 )
 
 func main() {
@@ -38,7 +38,7 @@ func main() {
 	runDelete(conf, nodes, tree)
 }
 
-func runInsert(conf *config, nodes []*bst.Node[int], tree bst.Tree[int]) {
+func runInsert(conf *config, nodes []*trees.Node[int], tree trees.Tree[int]) {
 	shuffle(conf, nodes)
 
 	pause()
@@ -63,7 +63,7 @@ func runInsert(conf *config, nodes []*bst.Node[int], tree bst.Tree[int]) {
 	pause()
 }
 
-func runDelete(conf *config, nodes []*bst.Node[int], tree bst.Tree[int]) {
+func runDelete(conf *config, nodes []*trees.Node[int], tree trees.Tree[int]) {
 	shuffle(conf, nodes)
 
 	pause()
@@ -89,7 +89,7 @@ func runDelete(conf *config, nodes []*bst.Node[int], tree bst.Tree[int]) {
 	pause()
 }
 
-func shuffle(conf *config, nodes []*bst.Node[int]) {
+func shuffle(conf *config, nodes []*trees.Node[int]) {
 	rand.Shuffle(len(nodes), func(i, j int) {
 		k := math.Round(float64(j) * conf.rand)
 		j = i - int(k)
@@ -97,19 +97,19 @@ func shuffle(conf *config, nodes []*bst.Node[int]) {
 	})
 }
 
-func newTree(kind string) bst.Tree[int] {
+func newTree(kind string) trees.Tree[int] {
 	switch kind {
 	case "rb":
-		return bst.NewRBTree[int]()
+		return trees.NewRBTree[int]()
 	default:
-		return bst.NewAVLTree[int]()
+		return trees.NewAVLTree[int]()
 	}
 }
 
-func newNodes(size int) []*bst.Node[int] {
-	nodes := make([]*bst.Node[int], size)
+func newNodes(size int) []*trees.Node[int] {
+	nodes := make([]*trees.Node[int], size)
 	for i := range nodes {
-		nodes[i] = bst.NewNode(i)
+		nodes[i] = trees.NewNode(i)
 	}
 
 	return nodes

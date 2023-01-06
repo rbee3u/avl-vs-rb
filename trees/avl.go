@@ -1,7 +1,7 @@
-package bst
+package trees
 
 import (
-	"github.com/rbee3u/avl-vs-rb/pkg/stats"
+	"github.com/rbee3u/avl-vs-rb/stats"
 	"golang.org/x/exp/constraints"
 )
 
